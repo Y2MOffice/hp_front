@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import axios from "axios";
 
 function App() {
+  const [testValue, setTestValue] = useState("");
+
+  const handleSearch = (e) => {
+    console.log(e.target.value);
+    setTestValue(e.target.value);
+  };
+  const fetchTest = async () => {
+    const response = await axios.post("/api", {
+      name: testValue,
+    });
+    console.log(response.data);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>TEST</h1>
+      <select id="test-select" value={testValue} onChange={handleSearch}>
+        <option value="test1">test1</option>
+        <option value="test2">test2</option>
+        <option value="test3">test3</option>
+      </select>
+      <button onClick={fetchTest}>click</button>
+    </>
   );
 }
 
